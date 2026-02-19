@@ -1,8 +1,8 @@
 import Airtable from 'airtable';
 
-const API_KEY = process.env.VITE_AIRTABLE_API_KEY;
-const BASE_ID = process.env.VITE_AIRTABLE_BASE_ID;
-const TABLE_ID = process.env.VITE_AIRTABLE_TABLE_ID || 'Posts';
+const API_KEY = process.env.VITE_AIRTABLE_API_KEY || process.env.AIRTABLE_API_KEY;
+const BASE_ID = process.env.VITE_AIRTABLE_BASE_ID || process.env.AIRTABLE_BASE_ID;
+const TABLE_ID = process.env.VITE_AIRTABLE_TABLE_ID || process.env.AIRTABLE_TABLE_ID || 'Posts';
 
 const base = new Airtable({ apiKey: API_KEY }).base(BASE_ID);
 const table = base(TABLE_ID);
