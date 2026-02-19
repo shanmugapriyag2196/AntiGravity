@@ -79,8 +79,8 @@ const Post = ({ post, onLike, onComment, onDelete, onEdit }) => {
                 )}
             </div>
 
-            {post.attachments && post.attachments.length > 0 && (
-                <img src={post.attachments[0].url} alt="Post attachment" className="post-image" />
+            {post.imageData && (
+                <img src={post.imageData} alt="Post image" className="post-image" />
             )}
 
             <div className="post-stats">

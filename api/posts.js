@@ -47,7 +47,7 @@ export default async function handler(req, res) {
                 id: record.id,
                 content: record.get('Content') || '',
                 author: record.get('Author') || 'Anonymous',
-                attachments: record.get('Attachments') || [],
+                imageData: record.get('ImageData') || '',
                 likes: record.get('Likes') || 0,
                 comments: record.get('Comments') ? JSON.parse(record.get('Comments')) : [],
                 createdTime: record.get('CreatedTime') || record._rawJson.createdTime,
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
                     fields: {
                         Content: content || '',
                         Author: author || 'Anonymous',
-                        Attachments: attachments || [],
+                        ImageData: attachments && attachments.length > 0 ? attachments[0].url : '',
                         Likes: 0,
                         Comments: JSON.stringify([])
                     }
