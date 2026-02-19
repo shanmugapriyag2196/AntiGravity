@@ -160,8 +160,9 @@ body {
 
 .post-image {
   width: 100%;
-  max-height: 500px;
-  object-fit: cover;
+  max-height: 600px;
+  object-fit: contain;
+  background-color: #f3f2ef;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -207,6 +208,7 @@ body {
   background: white;
   width: 100%;
   max-width: 552px;
+  max-height: 90vh;
   border-radius: var(--radius);
   display: flex;
   flex-direction: column;
@@ -218,10 +220,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .modal-body {
   padding: 16px 24px;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .modal-footer {
@@ -229,6 +234,7 @@ body {
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .primary-btn {

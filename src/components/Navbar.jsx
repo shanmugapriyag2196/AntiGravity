@@ -28,28 +28,31 @@ const Navbar = () => {
                 </div>
 
                 <div style={{ display: 'flex', gap: '24px', marginLeft: 'auto' }}>
-                    <NavItem icon={<Home size={24} />} label="Home" active />
-                    <NavItem icon={<Users size={24} />} label="My Network" />
-                    <NavItem icon={<Briefcase size={24} />} label="Jobs" />
-                    <NavItem icon={<MessageSquare size={24} />} label="Messaging" />
-                    <NavItem icon={<Bell size={24} />} label="Notifications" />
+                    <NavItem icon={<Home size={24} />} label="Home" active onClick={() => console.log('Home')} />
+                    <NavItem icon={<Users size={24} />} label="My Network" onClick={() => alert('My Network feature coming soon!')} />
+                    <NavItem icon={<Briefcase size={24} />} label="Jobs" onClick={() => alert('Jobs feature coming soon!')} />
+                    <NavItem icon={<MessageSquare size={24} />} label="Messaging" onClick={() => alert('Messaging feature coming soon!')} />
+                    <NavItem icon={<Bell size={24} />} label="Notifications" onClick={() => alert('Notifications feature coming soon!')} />
                 </div>
             </div>
         </nav>
     );
 };
 
-const NavItem = ({ icon, label, active }) => (
-    <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        cursor: 'pointer',
-        color: active ? 'black' : '#666',
-        borderBottom: active ? '2px solid black' : 'none',
-        padding: '4px 0',
-        minWidth: '80px'
-    }}>
+const NavItem = ({ icon, label, active, onClick }) => (
+    <div
+        onClick={onClick}
+        style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            cursor: 'pointer',
+            color: active ? 'black' : '#666',
+            borderBottom: active ? '2px solid black' : 'none',
+            padding: '4px 0',
+            minWidth: '80px'
+        }}
+    >
         {icon}
         <span style={{ fontSize: '12px', marginTop: '2px' }}>{label}</span>
     </div>

@@ -46,11 +46,11 @@ const CreatePost = ({ onPost }) => {
                         <Image size={20} color="#378fe9" />
                         <span>Media</span>
                     </button>
-                    <button className="action-btn">
+                    <button className="action-btn" onClick={() => alert('Events feature coming soon!')}>
                         <Calendar size={20} color="#c37d16" />
                         <span>Event</span>
                     </button>
-                    <button className="action-btn">
+                    <button className="action-btn" onClick={() => alert('Article writer coming soon!')}>
                         <Newspaper size={20} color="#e06847" />
                         <span>Write article</span>
                     </button>
@@ -81,11 +81,11 @@ const CreatePost = ({ onPost }) => {
                                 autoFocus
                             />
                             {imagePreview && (
-                                <div style={{ position: 'relative', marginTop: '12px' }}>
-                                    <img src={imagePreview} alt="Preview" style={{ width: '100%', borderRadius: '8px' }} />
+                                <div style={{ position: 'relative', marginTop: '12px', textAlign: 'center' }}>
+                                    <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'contain', borderRadius: '8px', border: '1px solid #eee' }} />
                                     <button
                                         onClick={() => { setImageFile(null); setImagePreview(null); }}
-                                        style={{ position: 'absolute', top: '8px', right: '8px', background: 'white', border: 'none', borderRadius: '50%', padding: '4px', cursor: 'pointer' }}
+                                        style={{ position: 'absolute', top: '8px', right: '8px', background: 'white', border: '1px solid #ccc', borderRadius: '50%', padding: '4px', cursor: 'pointer', display: 'flex', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
                                     >
                                         <X size={16} />
                                     </button>

@@ -100,11 +100,11 @@ const Post = ({ post, onLike, onComment, onDelete, onEdit }) => {
                     <MessageSquare size={20} />
                     <span>Comment</span>
                 </button>
-                <button className="action-btn">
+                <button className="action-btn" onClick={() => alert('Shared successfully!')}>
                     <Share2 size={20} />
                     <span>Share</span>
                 </button>
-                <button className="action-btn">
+                <button className="action-btn" onClick={() => alert('Post sent to connections!')}>
                     <Send size={20} />
                     <span>Send</span>
                 </button>
