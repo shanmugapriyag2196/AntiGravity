@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "rewrites": [
+        {
+            "source": "/api/posts",
+            "destination": "/api/posts.js"
+        },
+        {
+            "source": "/api/post-actions/:id",
+            "destination": "/api/post-actions.js?id=:id"
+        }
+    ]
+}
