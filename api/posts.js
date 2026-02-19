@@ -24,14 +24,28 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
         try {
-            const records = await table.select({
-                view: 'Grid view',
-                sort: [{ field: 'CreatedTime', direction: 'desc' }]
-            }).all();
+            if (!API_KEY || !BASE_ID) {
+                return res.status(500).json({
+                    error: 'Airtable configuration missing. Please set AIRTABLE_API_KEY and AIRTABLE_BASE_ID in Vercel settings.'
+                });
+            }
+
+            // Try to fetch records. If 'Grid view' or 'CreatedTime' don't exist, this might fail.
+            // We'll try a simpler select if it fails.
+            let records;
+            try {
+                records = await table.select({
+                    view: 'Grid view',
+                    sort: [{ field: 'CreatedTime', direction: 'desc' }]
+                }).all();
+            } catch (selectError) {
+                console.warn('Advanced select failed, falling back to simple select:', selectError.message);
+                records = await table.select().all();
+            }
 
             const posts = records.map(record => ({
                 id: record.id,
-                content: record.get('Content'),
+                content: record.get('Content') || '',
                 author: record.get('Author') || 'Anonymous',
                 attachments: record.get('Attachments') || [],
                 likes: record.get('Likes') || 0,
@@ -42,17 +56,24 @@ export default async function handler(req, res) {
             return res.status(200).json(posts);
         } catch (error) {
             console.error('Error fetching posts:', error);
-            return res.status(500).json({ error: 'Error fetching posts' });
+            return res.status(500).json({
+                error: `Error fetching posts: ${error.message}`,
+                details: error.toString()
+            });
         }
     }
 
     if (req.method === 'POST') {
         const { content, attachments, author } = req.body;
         try {
+            if (!API_KEY || !BASE_ID) {
+                return res.status(500).json({ error: 'Airtable configuration missing' });
+            }
+
             const records = await table.create([
                 {
                     fields: {
-                        Content: content,
+                        Content: content || '',
                         Author: author || 'Anonymous',
                         Attachments: attachments || [],
                         Likes: 0,
@@ -64,7 +85,10 @@ export default async function handler(req, res) {
             return res.status(201).json(records[0]);
         } catch (error) {
             console.error('Error creating post:', error);
-            return res.status(500).json({ error: 'Error creating post' });
+            return res.status(500).json({
+                error: `Error creating post: ${error.message}`,
+                details: error.toString()
+            });
         }
     }
 

@@ -20,7 +20,7 @@ function App() {
       setPosts(data);
       setError(null);
     } catch (err) {
-      setError('Failed to load posts. Please check your Airtable configuration.');
+      setError(err.message || 'Failed to load posts. Please check your Airtable configuration.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -42,7 +42,7 @@ function App() {
       };
       setPosts([newPost, ...posts]);
     } catch (err) {
-      alert('Failed to create post');
+      alert(`Failed to create post: ${err.message}`);
     }
   };
 

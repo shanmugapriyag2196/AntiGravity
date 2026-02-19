@@ -1,11 +1,18 @@
 const API_URL = '/api';
 
+const handleResponse = async (response) => {
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Request failed with status ${response.status}`);
+    }
+    return response.json();
+};
+
 export const airtableService = {
     async fetchPosts() {
         try {
             const response = await fetch(`${API_URL}/posts`);
-            if (!response.ok) throw new Error('Failed to fetch posts');
-            return await response.json();
+            return await handleResponse(response);
         } catch (error) {
             console.error('Error fetching posts:', error);
             throw error;
@@ -21,8 +28,7 @@ export const airtableService = {
                 },
                 body: JSON.stringify({ content, attachments, author }),
             });
-            if (!response.ok) throw new Error('Failed to create post');
-            return await response.json();
+            return await handleResponse(response);
         } catch (error) {
             console.error('Error creating post:', error);
             throw error;
@@ -38,8 +44,7 @@ export const airtableService = {
                 },
                 body: JSON.stringify({ content }),
             });
-            if (!response.ok) throw new Error('Failed to update post');
-            return await response.json();
+            return await handleResponse(response);
         } catch (error) {
             console.error('Error updating post:', error);
             throw error;
@@ -51,8 +56,7 @@ export const airtableService = {
             const response = await fetch(`${API_URL}/post-actions/${id}`, {
                 method: 'DELETE',
             });
-            if (!response.ok) throw new Error('Failed to delete post');
-            return await response.json();
+            return await handleResponse(response);
         } catch (error) {
             console.error('Error deleting post:', error);
             throw error;
@@ -72,8 +76,7 @@ export const airtableService = {
                     isLiked
                 }),
             });
-            if (!response.ok) throw new Error('Failed to toggle like');
-            return await response.json();
+            return await handleResponse(response);
         } catch (error) {
             console.error('Error toggling like:', error);
             throw error;
@@ -94,8 +97,7 @@ export const airtableService = {
                     author
                 }),
             });
-            if (!response.ok) throw new Error('Failed to add comment');
-            return await response.json();
+            return await handleResponse(response);
         } catch (error) {
             console.error('Error adding comment:', error);
             throw error;

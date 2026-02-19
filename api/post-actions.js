@@ -78,7 +78,10 @@ export default async function handler(req, res) {
             }
         } catch (error) {
             console.error('Error processing post action:', error);
-            return res.status(500).json({ error: 'Error processing action' });
+            return res.status(500).json({
+                error: `Error processing action: ${error.message}`,
+                details: error.toString()
+            });
         }
     }
 
