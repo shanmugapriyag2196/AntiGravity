@@ -77,8 +77,7 @@ export default async function handler(req, res) {
                         Author: author || 'Anonymous',
                         Attachments: attachments || [],
                         Likes: 0,
-                        Comments: JSON.stringify([]),
-                        CreatedTime: new Date().toISOString()
+                        Comments: JSON.stringify([])
                     }
                 }
             ]);
