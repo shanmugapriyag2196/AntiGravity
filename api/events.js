@@ -56,9 +56,7 @@ export default async function handler(req, res) {
                 Name: name || '',
                 Date: date || '',
                 Description: description || '',
-                Location: location || '',
-                Author: author || 'Anonymous',
-                ImageData: imageData || ''
+                Location: location || ''
             };
             const records = await table.create([{ fields }]);
             return res.status(201).json(records[0]);
