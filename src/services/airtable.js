@@ -1,11 +1,25 @@
 const API_URL = '/api';
 
 const handleResponse = async (response) => {
+    const contentType = response.headers.get('content-type');
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Request failed with status ${response.status}`);
+        let errorMessage = `Request failed with status ${response.status}`;
+        if (contentType && contentType.includes('application/json')) {
+            const errorData = await response.json().catch(() => ({}));
+            errorMessage = errorData.error || errorMessage;
+        }
+        throw new Error(errorMessage);
     }
-    return response.json();
+
+    if (contentType && contentType.includes('application/json')) {
+        return response.json();
+    }
+
+    const text = await response.text();
+    if (text.trim().startsWith('<!doctype html')) {
+        throw new Error('Server returned HTML instead of JSON. This usually indicates a routing issue or 404 on the API endpoint.');
+    }
+    return text;
 };
 
 export const airtableService = {

@@ -2,18 +2,19 @@
   --primary-color: #0a66c2;
   --secondary-color: #ffffff;
   --bg-color: #f3f2ef;
-  --text-main: #000000e6;
-  --text-muted: #00000099;
-  --border-color: #ebebeb;
-  --card-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --text-main: rgba(0, 0, 0, 0.9);
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
   --radius: 8px;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', Arial, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 .app-container {

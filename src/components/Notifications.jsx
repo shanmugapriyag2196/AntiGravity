@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Bell, MoreHorizontal, Settings } from 'lucide-react';
 
 const Notifications = () => {
