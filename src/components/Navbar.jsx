@@ -43,17 +43,20 @@ const Navbar = ({ activeTab, onTabChange }) => {
                     <NavItem
                         icon={<Briefcase size={24} />}
                         label="Jobs"
-                        onClick={() => alert('Jobs feature coming soon!')}
+                        active={activeTab === 'jobs'}
+                        onClick={() => onTabChange('jobs')}
                     />
                     <NavItem
                         icon={<MessageSquare size={24} />}
                         label="Messaging"
-                        onClick={() => alert('Messaging feature coming soon!')}
+                        active={activeTab === 'messaging'}
+                        onClick={() => onTabChange('messaging')}
                     />
                     <NavItem
                         icon={<Bell size={24} />}
                         label="Notifications"
-                        onClick={() => alert('Notifications feature coming soon!')}
+                        active={activeTab === 'notifications'}
+                        onClick={() => onTabChange('notifications')}
                     />
                 </div>
             </div>

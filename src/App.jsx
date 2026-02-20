@@ -3,6 +3,10 @@ import Navbar from './components/Navbar';
 import CreatePost from './components/CreatePost';
 import Post from './components/Post';
 import MyNetwork from './components/MyNetwork';
+import Jobs from './components/Jobs';
+import Messaging from './components/Messaging';
+import Notifications from './components/Notifications';
+import Sidebar from './components/Sidebar';
 import { airtableService } from './services/airtable';
 
 function App() {
@@ -94,32 +98,39 @@ function App() {
       <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
 
       <main className="main-content">
-        {activeTab === 'home' ? (
-          <div className="feed-container">
-            <CreatePost onPost={handleCreatePost} />
+        {activeTab === 'home' && (
+          <div style={{ display: 'flex', gap: '24px', justifyContent: 'center' }}>
+            <div style={{ width: '225px', flexShrink: 0 }}>
+              <Sidebar />
+            </div>
+            <div className="feed-container">
+              <CreatePost onPost={handleCreatePost} />
 
-            {loading ? (
-              <div style={{ textAlign: 'center', padding: '20px' }}>Loading posts...</div>
-            ) : error ? (
-              <div style={{ textAlign: 'center', padding: '20px', color: 'red' }}>{error}</div>
-            ) : (
-              <div className="posts-container">
-                {posts.map(post => (
-                  <Post
-                    key={post.id}
-                    post={post}
-                    onLike={handleLike}
-                    onComment={handleComment}
-                    onDelete={handleDelete}
-                    onEdit={handleEdit}
-                  />
-                ))}
-              </div>
-            )}
+              {loading ? (
+                <div style={{ textAlign: 'center', padding: '20px' }}>Loading posts...</div>
+              ) : error ? (
+                <div style={{ textAlign: 'center', padding: '20px', color: 'red' }}>{error}</div>
+              ) : (
+                <div className="posts-container">
+                  {posts.map(post => (
+                    <Post
+                      key={post.id}
+                      post={post}
+                      onLike={handleLike}
+                      onComment={handleComment}
+                      onDelete={handleDelete}
+                      onEdit={handleEdit}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        ) : (
-          <MyNetwork />
         )}
+        {activeTab === 'network' && <MyNetwork />}
+        {activeTab === 'jobs' && <Jobs />}
+        {activeTab === 'messaging' && <Messaging />}
+        {activeTab === 'notifications' && <Notifications />}
       </main>
     </div>
   );

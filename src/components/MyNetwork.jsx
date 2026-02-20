@@ -1,5 +1,4 @@
-import React from 'react';
-import { Users, UserPlus, BookOpen, Hash, Briefcase, ChevronRight } from 'lucide-react';
+import { Users, UserPlus, BookOpen, Hash, Briefcase, ChevronRight, Calendar } from 'lucide-react';
 
 const MyNetwork = () => {
     const connectionsCount = 1250;
