@@ -70,17 +70,15 @@ export default async function handler(req, res) {
                 return res.status(500).json({ error: 'Airtable configuration missing' });
             }
 
-            const records = await table.create([
-                {
-                    fields: {
-                        Content: content || '',
-                        Author: author || 'Anonymous',
-                        ImageData: attachments && attachments.length > 0 ? attachments[0].url : '',
-                        Likes: 0,
-                        Comments: JSON.stringify([])
-                    }
-                }
-            ]);
+            const fields = {
+                Content: content || '',
+                Author: author || 'Anonymous',
+                ImageData: attachments && attachments.length > 0 ? attachments[0].url : '',
+                Likes: 0,
+                Comments: JSON.stringify([])
+            };
+            console.log('Sending to Airtable:', JSON.stringify(fields, null, 2).substring(0, 500) + '...');
+            const records = await table.create([{ fields }]);
             return res.status(201).json(records[0]);
         } catch (error) {
             console.error('Error creating post:', error);
