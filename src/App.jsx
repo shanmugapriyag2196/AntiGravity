@@ -56,7 +56,6 @@ function App() {
 
   const handleLike = async (id, currentLikes) => {
     try {
-      const post = posts.find(p => p.id === id);
       // For simplicity, we don't track if user already liked, just toggle
       await airtableService.toggleLike(id, currentLikes, false);
       setPosts(posts.map(p => p.id === id ? { ...p, likes: p.likes + 1 } : p));

@@ -6,7 +6,6 @@ const CreatePost = ({ onPost }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeModal, setActiveModal] = useState('post'); // 'post', 'event', 'article'
     const [content, setContent] = useState('');
-    const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
 
     // Event specific state
@@ -45,7 +44,6 @@ const CreatePost = ({ onPost }) => {
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    setImageFile(file);
                     setImagePreview(dataUrl);
                 };
                 img.src = event.target.result;
@@ -82,7 +80,6 @@ const CreatePost = ({ onPost }) => {
 
     const resetState = () => {
         setContent('');
-        setImageFile(null);
         setImagePreview(null);
         setEventTitle('');
         setEventDate('');
@@ -179,7 +176,7 @@ const CreatePost = ({ onPost }) => {
                                 <div style={{ position: 'relative', marginTop: '12px', textAlign: 'center' }}>
                                     <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'contain', borderRadius: '8px', border: '1px solid #eee' }} />
                                     <button
-                                        onClick={() => { setImageFile(null); setImagePreview(null); }}
+                                        onClick={() => { setImagePreview(null); }}
                                         style={{ position: 'absolute', top: '8px', right: '8px', background: 'white', border: '1px solid #ccc', borderRadius: '50%', padding: '4px', cursor: 'pointer', display: 'flex', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
                                     >
                                         <X size={16} />

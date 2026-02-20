@@ -57,10 +57,10 @@ export default async function handler(req, res) {
         try {
             if (action === 'like') {
                 const newLikes = isLiked ? Math.max(0, currentLikes - 1) : currentLikes + 1;
-                const record = await table.update(id, {
+                const updatedRecord = await table.update(id, {
                     Likes: newLikes
                 });
-                return res.status(200).json(record);
+                return res.status(200).json(updatedRecord);
             }
 
             if (action === 'comment') {
@@ -71,7 +71,7 @@ export default async function handler(req, res) {
                     timestamp: new Date().toISOString()
                 };
                 const updatedComments = [...(currentComments || []), newComment];
-                const record = await table.update(id, {
+                await table.update(id, {
                     Comments: JSON.stringify(updatedComments)
                 });
                 return res.status(200).json(updatedComments);
