@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import CreatePost from './components/CreatePost';
 import Post from './components/Post';
+import MyNetwork from './components/MyNetwork';
 import { airtableService } from './services/airtable';
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
     loadPosts();
@@ -89,28 +91,34 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar />
+      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
 
-      <main className="main-feed">
-        <CreatePost onPost={handleCreatePost} />
+      <main className="main-content">
+        {activeTab === 'home' ? (
+          <div className="feed-container">
+            <CreatePost onPost={handleCreatePost} />
 
-        {loading ? (
-          <div style={{ textAlign: 'center', padding: '20px' }}>Loading posts...</div>
-        ) : error ? (
-          <div style={{ textAlign: 'center', padding: '20px', color: 'red' }}>{error}</div>
-        ) : (
-          <div className="posts-container">
-            {posts.map(post => (
-              <Post
-                key={post.id}
-                post={post}
-                onLike={handleLike}
-                onComment={handleComment}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-              />
-            ))}
+            {loading ? (
+              <div style={{ textAlign: 'center', padding: '20px' }}>Loading posts...</div>
+            ) : error ? (
+              <div style={{ textAlign: 'center', padding: '20px', color: 'red' }}>{error}</div>
+            ) : (
+              <div className="posts-container">
+                {posts.map(post => (
+                  <Post
+                    key={post.id}
+                    post={post}
+                    onLike={handleLike}
+                    onComment={handleComment}
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
+                  />
+                ))}
+              </div>
+            )}
           </div>
+        ) : (
+          <MyNetwork />
         )}
       </main>
     </div>
