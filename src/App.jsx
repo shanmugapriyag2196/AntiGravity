@@ -17,6 +17,7 @@ function App() {
     try {
       setLoading(true);
       const data = await airtableService.fetchPosts();
+      console.log('Fetched posts data:', data);
       setPosts(data);
       setError(null);
     } catch (err) {

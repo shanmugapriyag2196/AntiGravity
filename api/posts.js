@@ -43,15 +43,28 @@ export default async function handler(req, res) {
                 records = await table.select().all();
             }
 
-            const posts = records.map(record => ({
-                id: record.id,
-                content: record.get('Content') || '',
-                author: record.get('Author') || 'Anonymous',
-                imageData: record.get('ImageData') || '',
-                likes: record.get('Likes') || 0,
-                comments: record.get('Comments') ? JSON.parse(record.get('Comments')) : [],
-                createdTime: record.get('CreatedTime') || record._rawJson.createdTime,
-            }));
+            if (records.length > 0) {
+                console.log('Available fields for first record:', Object.keys(records[0].fields));
+            }
+
+            const posts = records.map(record => {
+                // Try to find image data in various possible field names
+                const imageData = record.get('ImageData') ||
+                    record.get('imageData') ||
+                    record.get('image_data') ||
+                    (record.get('Attachments') && record.get('Attachments')[0] ? record.get('Attachments')[0].url : '');
+
+                return {
+                    id: record.id,
+                    content: record.get('Content') || record.get('content') || '',
+                    author: record.get('Author') || record.get('author') || 'Anonymous',
+                    imageData: imageData || '',
+                    likes: record.get('Likes') || record.get('likes') || 0,
+                    comments: record.get('Comments') || record.get('comments') ?
+                        JSON.parse(record.get('Comments') || record.get('comments') || '[]') : [],
+                    createdTime: record.get('CreatedTime') || record.get('createdTime') || record._rawJson.createdTime,
+                };
+            });
 
             return res.status(200).json(posts);
         } catch (error) {
