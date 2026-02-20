@@ -61,6 +61,22 @@ const Post = ({ post, onLike, onComment, onDelete, onEdit }) => {
             </div>
 
             <div className="post-content">
+                {post.title && (
+                    <div style={{ marginBottom: '12px' }}>
+                        <span style={{
+                            backgroundColor: post.type === 'event' ? '#fde047' : '#e0f2fe',
+                            color: post.type === 'event' ? '#854d0e' : '#0369a1',
+                            padding: '2px 8px',
+                            borderRadius: '12px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            marginRight: '8px'
+                        }}>
+                            {post.type === 'event' ? 'EVENT' : 'ARTICLE'}
+                        </span>
+                        <h3 style={{ margin: '4px 0', fontSize: '18px', fontWeight: 700 }}>{post.title}</h3>
+                    </div>
+                )}
                 {isEditing ? (
                     <div>
                         <textarea
@@ -75,7 +91,7 @@ const Post = ({ post, onLike, onComment, onDelete, onEdit }) => {
                         </div>
                     </div>
                 ) : (
-                    post.content
+                    <div style={{ whiteSpace: 'pre-wrap' }}>{post.content}</div>
                 )}
             </div>
 

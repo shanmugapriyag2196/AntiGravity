@@ -58,6 +58,8 @@ export default async function handler(req, res) {
                     id: record.id,
                     content: record.get('Content') || record.get('content') || '',
                     author: record.get('Author') || record.get('author') || 'Anonymous',
+                    title: record.get('Title') || record.get('title') || '',
+                    type: record.get('Type') || record.get('type') || 'post',
                     imageData: imageData || '',
                     likes: record.get('Likes') || record.get('likes') || 0,
                     comments: record.get('Comments') || record.get('comments') ?
@@ -86,6 +88,8 @@ export default async function handler(req, res) {
             const fields = {
                 Content: content || '',
                 Author: author || 'Anonymous',
+                Title: req.body.title || '',
+                Type: req.body.type || 'post',
                 ImageData: attachments && attachments.length > 0 ? attachments[0].url : '',
                 Likes: 0,
                 Comments: JSON.stringify([])

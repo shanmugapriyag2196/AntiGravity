@@ -33,14 +33,14 @@ export const airtableService = {
         }
     },
 
-    async createPost(content, attachments = [], author = 'User') {
+    async createPost(content, attachments = [], author = 'User', type = 'post', title = '') {
         try {
             const response = await fetch(`${API_URL}/posts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ content, attachments, author }),
+                body: JSON.stringify({ content, attachments, author, type, title }),
             });
             return await handleResponse(response);
         } catch (error) {
@@ -114,6 +114,32 @@ export const airtableService = {
             return await handleResponse(response);
         } catch (error) {
             console.error('Error adding comment:', error);
+            throw error;
+        }
+    },
+
+    async fetchEvents() {
+        try {
+            const response = await fetch(`${API_URL}/events`);
+            return await handleResponse(response);
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            throw error;
+        }
+    },
+
+    async createEvent(eventData) {
+        try {
+            const response = await fetch(`${API_URL}/events`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventData),
+            });
+            return await handleResponse(response);
+        } catch (error) {
+            console.error('Error creating event:', error);
             throw error;
         }
     }

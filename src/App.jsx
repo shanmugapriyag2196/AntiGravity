@@ -34,14 +34,15 @@ function App() {
     }
   };
 
-  const handleCreatePost = async (content, attachments) => {
+  const handleCreatePost = async (content, attachments, type = 'post', title = '') => {
     try {
-      const newRecord = await airtableService.createPost(content, attachments);
-      // Optimistic update or just reload
+      const newRecord = await airtableService.createPost(content, attachments, 'Anonymous', type, title);
       const newPost = {
         id: newRecord.id,
         content,
         author: 'Anonymous',
+        title,
+        type,
         attachments,
         likes: 0,
         comments: [],
