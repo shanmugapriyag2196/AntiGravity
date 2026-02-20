@@ -1,18 +1,34 @@
+import React, { useState } from 'react';
 import { Users, UserPlus, BookOpen, Hash, Briefcase, ChevronRight, Calendar } from 'lucide-react';
 
 const MyNetwork = () => {
-    const connectionsCount = 1250;
-
-    const invitations = [
+    const [invitations, setInvitations] = useState([
         { id: 1, name: 'John Doe', title: 'Software Engineer at TechCorp', mutual: 12 },
         { id: 2, name: 'Sarah Smith', title: 'Product Manager at Innovate', mutual: 5 }
-    ];
+    ]);
 
-    const suggestions = [
+    const [suggestions, setSuggestions] = useState([
         { id: 3, name: 'Alice Johnson', title: 'Full Stack Developer', company: 'StartupX' },
         { id: 4, name: 'Bob Wilson', title: 'UX Designer', company: 'DesignCo' },
         { id: 5, name: 'Charlie Brown', title: 'Data Scientist', company: 'DataFlow' }
-    ];
+    ]);
+
+    const [connectionsCount, setConnectionsCount] = useState(1250);
+
+    const handleAccept = (id) => {
+        setInvitations(invitations.filter(invite => invite.id !== id));
+        setConnectionsCount(prev => prev + 1);
+        alert('Invitation accepted!');
+    };
+
+    const handleIgnore = (id) => {
+        setInvitations(invitations.filter(invite => invite.id !== id));
+    };
+
+    const handleConnect = (id) => {
+        setSuggestions(suggestions.filter(person => person.id !== id));
+        alert('Connection request sent!');
+    };
 
     return (
         <div className="my-network-container" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '24px', maxWidth: '1128px', margin: '0 auto', padding: '24px' }}>
@@ -67,26 +83,40 @@ const MyNetwork = () => {
                 {/* Invitations */}
                 <section className="card" style={{ marginBottom: '24px' }}>
                     <div style={{ padding: '16px', borderBottom: '1px solid #eef3f8', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h3 style={{ margin: 0, fontSize: '16px' }}>Invitations</h3>
+                        <h3 style={{ margin: 0, fontSize: '16px' }}>Invitations ({invitations.length})</h3>
                         <button className="input-trigger" style={{ padding: '4px 8px', border: 'none' }}>See all</button>
                     </div>
                     <div>
-                        {invitations.map(invite => (
-                            <div key={invite.id} style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eef3f8' }}>
-                                <div style={{ display: 'flex', gap: '12px' }}>
-                                    <div className="avatar" style={{ width: '56px', height: '56px' }}></div>
-                                    <div>
-                                        <div style={{ fontWeight: 600 }}>{invite.name}</div>
-                                        <div style={{ fontSize: '14px', color: '#666' }}>{invite.title}</div>
-                                        <div style={{ fontSize: '12px', color: '#666' }}>{invite.mutual} mutual connections</div>
+                        {invitations.length === 0 ? (
+                            <div style={{ padding: '24px', textAlign: 'center', color: '#666' }}>No pending invitations</div>
+                        ) : (
+                            invitations.map(invite => (
+                                <div key={invite.id} style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eef3f8' }}>
+                                    <div style={{ display: 'flex', gap: '12px' }}>
+                                        <div className="avatar" style={{ width: '56px', height: '56px' }}></div>
+                                        <div>
+                                            <div style={{ fontWeight: 600 }}>{invite.name}</div>
+                                            <div style={{ fontSize: '14px', color: '#666' }}>{invite.title}</div>
+                                            <div style={{ fontSize: '12px', color: '#666' }}>{invite.mutual} mutual connections</div>
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '12px' }}>
+                                        <button
+                                            onClick={() => handleIgnore(invite.id)}
+                                            style={{ background: 'none', border: 'none', color: '#666', fontWeight: 600, cursor: 'pointer' }}
+                                        >
+                                            Ignore
+                                        </button>
+                                        <button
+                                            onClick={() => handleAccept(invite.id)}
+                                            className="primary-btn" style={{ padding: '4px 16px' }}
+                                        >
+                                            Accept
+                                        </button>
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', gap: '12px' }}>
-                                    <button style={{ background: 'none', border: 'none', color: '#666', fontWeight: 600, cursor: 'pointer' }}>Ignore</button>
-                                    <button className="primary-btn" style={{ padding: '4px 16px' }}>Accept</button>
-                                </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </section>
 
@@ -102,7 +132,12 @@ const MyNetwork = () => {
                                 <div style={{ fontWeight: 600, fontSize: '16px' }}>{person.name}</div>
                                 <div style={{ fontSize: '12px', color: '#666', height: '32px', overflow: 'hidden', margin: '4px 0' }}>{person.title}</div>
                                 <div style={{ fontSize: '12px', color: '#666', marginBottom: '12px' }}>At {person.company}</div>
-                                <button className="input-trigger" style={{ width: '100%', borderColor: '#0a66c2', color: '#0a66c2' }}>Connect</button>
+                                <button
+                                    onClick={() => handleConnect(person.id)}
+                                    className="input-trigger" style={{ width: '100%', borderColor: '#0a66c2', color: '#0a66c2' }}
+                                >
+                                    Connect
+                                </button>
                             </div>
                         ))}
                     </div>
